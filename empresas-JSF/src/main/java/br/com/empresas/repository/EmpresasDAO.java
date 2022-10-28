@@ -3,6 +3,7 @@ package br.com.empresas.repository;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -11,6 +12,7 @@ import br.com.empresas.model.Empresa;
 public class EmpresasDAO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@Inject
 	private EntityManager manager;
 
 	public EmpresasDAO() {
