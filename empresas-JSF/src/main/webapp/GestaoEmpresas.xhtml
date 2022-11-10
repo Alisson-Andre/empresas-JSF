@@ -16,7 +16,7 @@
 		<h:form id="frm">
 			<p:growl id="messages" />
 
-			<p:toolbar>
+			<p:toolbar id="toolbar">
 				<p:toolbarGroup>
 					<p:inputText id="termoPesquisa"
 						placeholder="Digite aqui um termo para pesquisa..." size="40"
@@ -28,12 +28,17 @@
 					<p:commandButton value="Nova" icon="pi pi-plus"
 						actionListener="#{gestaoEmpresasBean.prepararNovaEmpresa}"
 						oncomplete="PF('empresaDialogWidgetVar').show()"
-						update="empresaDialog" process="@this" />
+						update="empresaDialog" process="@this">
+						<p:resetInput target="empresaDialog" />
+					</p:commandButton>
 
-					<p:commandButton type="button" title="Editar"
-						icon="pi pi-file-edit" />
-					<p:commandButton type="button" title="Excluir" icon="pi pi-trash" />
-					<p:commandButton type="button" title="Exportar para o Excel"
+					<p:commandButton title="Editar" icon="pi pi-file-edit"
+						disabled="#{not gestaoEmpresasBean.empresaSelecionada}" />
+
+					<p:commandButton title="Excluir" icon="pi pi-trash"
+						disabled="#{not gestaoEmpresasBean.empresaSelecionada}" />
+
+					<p:commandButton title="Exportar para o Excel"
 						icon="pi pi-file-excel" />
 				</p:toolbarGroup>
 			</p:toolbar>
@@ -41,7 +46,12 @@
 			<p:dataTable id="empresasDataTable"
 				value="#{gestaoEmpresasBean.listaEmpresas}" var="empresa"
 				emptyMessage="Nenhuma informação a ser exibida" paginator="true"
-				rows="5" paginatorPosition="bottom">
+				rows="5" paginatorPosition="bottom" selectionMode="single"
+				selection="#{gestaoEmpresasBean.empresa}" rowKey="#{empresa.id}">
+
+				<p:ajax event="rowSelect" update="frm:toolbar" />
+
+				<p:ajax event="rowUnselect" update="frm:toolbar" />
 
 				<p:column headerText="Razão social" sortBy="#{empresa.razaoSocial}">
 					<h:outputText value="#{empresa.razaoSocial}" />
@@ -60,10 +70,11 @@
 				</p:column>
 			</p:dataTable>
 
-
 			<p:dialog id="empresaDialog" header="Nova empresa"
 				widgetVar="empresaDialogWidgetVar" modal="true" resizable="false"
 				closeOnEscape="true">
+
+				<p:defaultCommand target="salvarCommandButton" scope="empresaDialog" />
 
 				<p:growl id="messagesDialog" />
 
@@ -103,7 +114,7 @@
 						itemValue="#{ramoAtividade}" />
 
 					<h:outputLabel />
-					<p:commandButton value="Salvar"
+					<p:commandButton id="salvarCommandButton" value="Salvar"
 						actionListener="#{gestaoEmpresasBean.salvar()}"
 						update="empresaPanelGrid messagesDialog"
 						oncomplete="if(!args.validationFailed) PF('empresaDialogWidgetVar').hide()"
