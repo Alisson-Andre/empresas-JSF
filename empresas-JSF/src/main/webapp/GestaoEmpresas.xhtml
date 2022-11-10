@@ -33,10 +33,20 @@
 					</p:commandButton>
 
 					<p:commandButton title="Editar" icon="pi pi-file-edit"
-						disabled="#{not gestaoEmpresasBean.empresaSelecionada}" />
+						disabled="#{not gestaoEmpresasBean.empresaSelecionada}"
+						actionListener="#{gestaoEmpresasBean.prepararEdicao()}"
+						oncomplete="PF('empresaDialogWidgetVar').show()"
+						update="empresaDialog" process="@this">
+						<p:resetInput target="empresaDialog" />
+					</p:commandButton>
 
 					<p:commandButton title="Excluir" icon="pi pi-trash"
-						disabled="#{not gestaoEmpresasBean.empresaSelecionada}" />
+						disabled="#{not gestaoEmpresasBean.empresaSelecionada}"
+						actionListener="#{gestaoEmpresasBean.excluir()}"
+						update="messages empresasDataTable toolbar" process="@this">
+						<p:confirm icon="pi pi-exclamation-triangle" header="Confirmação de exclusão"
+							message="Deseja realmente exlcuir #{gestaoEmpresasBean.empresa.razaoSocial}?" />
+					</p:commandButton>
 
 					<p:commandButton title="Exportar para o Excel"
 						icon="pi pi-file-excel" />
