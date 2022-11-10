@@ -25,7 +25,7 @@
 						actionListener="#{gestaoEmpresasBean.pesquisar()}"
 						update="empresasDataTable messages" process="@this termoPesquisa" />
 
-					<p:commandButton value="Nova" icon="pi pi-plus"
+					<p:commandButton title="Cadastrar nova empresa" value="Nova" icon="pi pi-plus"
 						actionListener="#{gestaoEmpresasBean.prepararNovaEmpresa}"
 						oncomplete="PF('empresaDialogWidgetVar').show()"
 						update="empresaDialog" process="@this">
@@ -49,7 +49,9 @@
 					</p:commandButton>
 
 					<p:commandButton title="Exportar para o Excel"
-						icon="pi pi-file-excel" />
+						icon="pi pi-file-excel" ajax="false">
+						<p:dataExporter type="xls" target="empresasDataTable" fileName="Empresas"/>	
+					</p:commandButton>
 				</p:toolbarGroup>
 			</p:toolbar>
 
