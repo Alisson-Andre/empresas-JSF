@@ -25,14 +25,15 @@
 						actionListener="#{gestaoEmpresasBean.pesquisar()}"
 						update="empresasDataTable messages" process="@this termoPesquisa" />
 
-					<p:commandButton title="Cadastrar nova empresa" value="Nova" icon="pi pi-plus"
+					<p:commandButton title="Cadastrar nova empresa" value="Nova"
+						icon="pi pi-plus" styleClass="ui-button-help"
 						actionListener="#{gestaoEmpresasBean.prepararNovaEmpresa}"
 						oncomplete="PF('empresaDialogWidgetVar').show()"
 						update="empresaDialog" process="@this">
 						<p:resetInput target="empresaDialog" />
 					</p:commandButton>
 
-					<p:commandButton title="Editar" icon="pi pi-file-edit"
+					<p:commandButton title="Editar" icon="pi pi-file-edit" styleClass="ui-button-warning"
 						disabled="#{not gestaoEmpresasBean.empresaSelecionada}"
 						actionListener="#{gestaoEmpresasBean.prepararEdicao()}"
 						oncomplete="PF('empresaDialogWidgetVar').show()"
@@ -40,17 +41,20 @@
 						<p:resetInput target="empresaDialog" />
 					</p:commandButton>
 
-					<p:commandButton title="Excluir" icon="pi pi-trash"
+					<p:commandButton title="Excluir" icon="pi pi-trash" styleClass="ui-button-danger"
 						disabled="#{not gestaoEmpresasBean.empresaSelecionada}"
 						actionListener="#{gestaoEmpresasBean.excluir()}"
 						update="messages empresasDataTable toolbar" process="@this">
-						<p:confirm icon="pi pi-exclamation-triangle" header="Confirmação de exclusão"
+						<p:confirm icon="pi pi-exclamation-triangle"
+							header="Confirmação de exclusão"
 							message="Deseja realmente exlcuir #{gestaoEmpresasBean.empresa.razaoSocial}?" />
 					</p:commandButton>
 
 					<p:commandButton title="Exportar para o Excel"
-						icon="pi pi-file-excel" ajax="false">
-						<p:dataExporter type="xls" target="empresasDataTable" fileName="Empresas"/>	
+						icon="pi pi-file-excel" styleClass="ui-button-success"
+						ajax="false">
+						<p:dataExporter type="xls" target="empresasDataTable"
+							fileName="Empresas" />
 					</p:commandButton>
 				</p:toolbarGroup>
 			</p:toolbar>
